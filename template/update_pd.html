@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'media/favicon.jpeg' %}" title="Favicon" />
+    <link href="{% static 'styles/styles.css' %}" rel="stylesheet">
+    <title>Edit Details</title>
+    <style>
+        body {
+            animation: fadein ease 1s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadein {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/uploadpd/" method="post" class="login">
+        {% csrf_token %}
+        {% if details %}
+        {% for p in details %}
+        <input type="text" name="firstname" placeholder="Enter your first name" value="{{ p.fname }}"><br>
+        <input type="text" name="lastname" placeholder="Enter your last name" value="{{ p.lname }}"><br>
+        Date of Birth - <input type="date" name="dob" placeholder="Enter your date of birth" value="{{ p.dob }}"><br>
+        <input type="number" name="weight" placeholder="Enter your weight in kg" value="{{ p.w }}"><br>
+        <input type="number" name="height" placeholder="Enter your height in inches" value="{{ p.h }}"><br>
+        Patient of - <input type="text" name="disease" placeholder="Enter a disease you're suffering from if any"
+            value="None"><br>
+        {% endfor %}
+        {% else %}
+        <input type="text" name="firstname" placeholder="Enter your first name"><br>
+        <input type="text" name="lastname" placeholder="Enter your last name"><br>
+        Date of Birth - <input type="date" name="dob" placeholder="Enter your date of birth"><br>
+        <input type="number" name="weight" placeholder="Enter your weight in kg"><br>
+        <input type="number" name="height" placeholder="Enter your height in inches"><br>
+        Patient of - <input type="text" name="disease" placeholder="Enter a disease you're suffering from if any"
+            value="None"><br>
+
+        {% endif %}
+
+        <button type="submit">save</button>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'media/favicon.jpeg' %}" title="Favicon" />
+    <link href="{% static 'styles/styles.css' %}" rel="stylesheet">
+    <title>New Exercise</title>
+    <style>
+        body {
+            animation: fadein ease 1s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadein {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/createexercise/" method="post" class="login">
+        {% csrf_token %}
+        <input type="text" name="ename" placeholder="Enter exercise name"><br>
+        <input type="text" name="edesc" placeholder="Enter exercise description"><br>
+        <input type="text" name="etag" placeholder="Enter exercise tag/category"><br>
+
+        <input type="date" name="created_at"><br>
+        <input type="number" name="priority" placeholder="enter priority level">
+        <button type="submit">create</button>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'media/favicon.jpeg' %}" title="Favicon" />
+    <link href="{% static 'styles/styles.css' %}" rel="stylesheet">
+
+    <title>Fitness Tools</title>
+    <style>
+        body {
+            background-color: #ddd;
+        }
+
+        body {
+            animation: fadein ease 1s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadein {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .navbar {
+            overflow-x: hidden;
+            background-color: #794482;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            left: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .navbar a {
+            float: left;
+            display: block;
+            color: #f2f2f2;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .navbar a:hover {
+            background-color: #BA68C8;
+            color: black;
+        }
+
+        .navbar a.active {
+            background-color: #BA68C8;
+            color: black;
+        }
+
+        .navbar .icon {
+            display: none;
+        }
+
+        @media screen and (max-width: 600px) {
+            .navbar a:not(:first-child) {
+                display: none;
+            }
+
+            .navbar a.icon {
+                float: right;
+                display: block;
+            }
+
+            .navbar {
+                display: block !important;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .navbar.responsive .icon {
+                position: absolute;
+                right: 0;
+                bottom: 0;
+            }
+
+            .navbar.responsive a {
+                float: none;
+                display: block;
+                text-align: left;
+            }
+
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: var(--f1);
+        }
+
+        .center {
+            text-align: center;
+        }
+
+        .purple {
+            color: #794482;
+        }
+
+        .card-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+            width: 85%;
+
+        }
+
+        .blue {
+            background-color: rgb(186, 104, 200, 0.6);
+        }
+
+        .unblue {
+            background-color: #acb6c4;
+        }
+
+        .cwhite {
+            color: #fff;
+
+        }
+
+        .content {
+            padding: 10px 30px 0px 30px;
+        }
+
+        #sleep .calculator,
+        #bmi .calculator,
+        #whr .calculator,
+        #weightloss .calculator {
+            max-width: 400px;
+            margin: 0 auto;
+
+            padding: 20px;
+            margin: 40px;
+            border-radius: 5px;
+
+        }
+
+        #sleep label,
+        #bmi label,
+        #whr label,
+        #weightloss label {
+            font-weight: bold;
+            font-family: var(--f2);
+        }
+
+        #sleep input[type="number"],
+        #bmi input[type="number"],
+        #weightloss input[type="number"],
+        #whr input[type="number"] {
+            width: 100%;
+            font-family: var(--f2);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        #sleep button,
+        #bmi button,
+        #whr button,
+        #weightloss button {
+            background-color: #794482;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        #sleep button:hover,
+        #bmi button:hover,
+        #whr button:hover,
+        #weightloss button:hover {
+            background-color: #c875d7;
+            color: #000;
+        }
+
+        #sleep #result1,
+        #bmi #result2,
+        #result3,
+        #result4 {
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+
+        .btns {
+            cursor: pointer;
+            color: #fff;
+            text-transform: uppercase;
+            border: 0;
+            padding: 10px 7px;
+            font-family: var(--f1);
+            margin-top: 10px;
+            margin-left: -5px;
+            border-radius: 5px;
+            background-color: #BB69C9;
+            -webkit-transition: background-color 300ms;
+            -moz-transition: background-color 300ms;
+            transition: background-color 300ms;
+        }
+
+        .btns:hover {
+            background-color: #7A667D;
+        }
+
+        .space-around {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+        }
+
+        .row .card.f5 {
+            width: 50%;
+        }
+
+        .row .card.f3 {
+            width: 30%;
+        }
+
+        .grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            gap: 15px;
+            align-items: center;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 300px));
+        }
+
+        .goals {
+            background-color: #BA68C8;
+            padding: 5px;
+            text-align: center;
+            border-radius: 15px;
+            border: 1px solid #794482;
+            /* width: 30%; */
+            margin: 10px;
+
+        }
+
+        .tab {
+            overflow: hidden;
+
+            background-color: #c875d7;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-evenly;
+            padding: 10px 0px 10px 0px;
+        }
+
+        /* Style the buttons inside the tab */
+        .tab button {
+            background-color: inherit;
+            border-radius: 10px;
+            float: left;
+            border: none;
+            outline: none;
+            cursor: pointer;
+            padding: 14px 16px;
+            transition: 0.3s;
+            font-size: 17px;
+        }
+
+        /* Change background color of buttons on hover */
+        .tab button:hover {
+            background-color: #ddd;
+        }
+
+        /* Create an active/current tablink class */
+        .tab button.active {
+            background-color: #ccc;
+        }
+
+        /* Style the tab content */
+        .tabcontent {
+            display: none;
+            padding: 6px 12px;
+            border: 1px solid #ccc;
+            border-top: none;
+        }
+
+        @media screen and (max-width: 768px) {
+            .tab {
+                display: block;
+            }
+
+            .row {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .card {
+                width: 85% !important;
+            }
+
+        }
+
+        input[type="time"] {
+            width: 100%;
+            font-family: var(--f2);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="navbar" id="nav">
+            <a href="/home/">Home</a>
+            <a href="/tools/" class="active">Fitness Tools</a>
+            <a href="/exercises/">Exercise Tracking</a>
+            <a href="/recommendations/">Recommendations</a>
+            <a href="/goals/">Fitness Goals</a>
+            <a href="/myaccount/">My Account</a>
+            <a href="/blogs/">Fitness Blog</a>
+            <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="navbar()">&#9776;</a>
+        </div>
+        <div class="content">
+            <h2 class="center">Fitness <span class="purple">Tools</span> 🔧</h2>
+            <p>Select a tool and quantify your fitness!</p>
+            <br>
+
+            <div class="tab">
+                <button class="tablinks" onclick="openTab(event, 'sleep')">Sleep Schedule Creator</button>
+                <button class="tablinks" onclick="openTab(event, 'bmi')">BMI Calculator</button>
+                <button class="tablinks" onclick="openTab(event, 'whr')">WHR Calculator</button>
+                <button class="tablinks" onclick="openTab(event, 'weightloss')">BMR Calculator</button>
+            </div>
+            <!-- Sleep Schedule Calculator -->
+            <div id="sleep" class="tabcontent">
+                <div class="calculator">
+                    <h1>Sleep Schedule Calculator</h1>
+                    <label for="age">Your Age:</label>
+                    <input type="number" id="age" placeholder="Enter your age">
+                    <label for="wakeup">Wake-Up Time:</label>
+                    <input type="time" id="wakeup">
+                    <button onclick="calculateSleepSchedule()">Calculate</button>
+                    <div id="result1"></div>
+                </div>
+            </div>
+            <!-- BMI Calculator -->
+            <div id="bmi" class="tabcontent">
+                <div class="calculator" id="bmi">
+                    <h1>BMI Calculator</h1>
+                    <label for="weight">Weight (kg):</label>
+                    <input type="number" id="weight" placeholder="Enter your weight in kilograms">
+                    <label for="height">Height (inch):</label>
+                    <input type="number" id="height" placeholder="Enter your height in inches">
+                    <button onclick="calculateBMI()">Calculate BMI</button>
+                    <div id="result2"></div>
+                </div>
+                <p>BMI (Body Mass Index) is used to assess a person's weight relative to their height and is commonly
+                    used to screen for general health and estimate whether an individual is underweight, normal weight,
+                    overweight, or obese.
+
+                </p>
+            </div>
+            <!-- WHR Calculator -->
+            <div id="whr" class="tabcontent">
+                <div class="calculator" id="whr">
+                    <h1>Waist-Hip Ratio Calculator</h1>
+                    <label for="waist">Waist Circumference (cm):</label>
+                    <input type="number" id="waist" placeholder="Enter your waist circumference in centimeters">
+                    <label for="hip">Hip Circumference (cm):</label>
+                    <input type="number" id="hip" placeholder="Enter your hip circumference in centimeters">
+                    <button onclick="calculateWHR()">Calculate WHR</button>
+                    <div id="result3"></div>
+                </div>
+                <p>WHR (Waist-Hip Ratio) is used to assess the distribution of fat in the body and is often used as an
+                    indicator of the risk of developing various health conditions, particularly related to abdominal or
+                    central obesity. A high WHR may indicate a higher risk of certain health issues such as
+                    cardiovascular disease and type 2 diabetes. </p>
+            </div>
+            <!-- BMR Calculator -->
+            <div id="weightloss" class="tabcontent">
+                <div class="calculator" id="bmr">
+                    <h1>BMR Calculator</h1>
+                    <label for="gender">Gender:</label>
+                    <select id="gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                    <br><br>
+                    <label for="weight">Weight (kg):</label>
+                    <input type="number" id="weight" placeholder="Enter your weight in kilograms">
+                    <label for="height">Height (inches):</label>
+                    <input type="number" id="height" placeholder="Enter your height in inches">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" placeholder="Enter your age">
+                    <button onclick="calculateBMR()">Calculate BMR</button>
+                    <div id="result4"></div>
+                </div>
+                <p>BMR, or Basal Metabolic Rate, is the amount of energy (in calories) that your body needs to maintain
+                    basic functions while at rest. It represents the energy your body requires to perform vital
+                    functions such as breathing, circulating blood, regulating body temperature, and supporting various
+                    biochemical reactions necessary for life. BMR is typically measured in calories per day and is
+                    influenced by factors like age, gender, weight, height, and body composition. It's an essential
+                    component in understanding your daily caloric needs and can be used as a basis for determining
+                    calorie requirements for weight management and overall health. </p>
+            </div>
+
+        </div>
+        <br><br><br><br><br><br>
+    </div>
+</body>
+<script>
+    function navbar() {
+        var x = document.getElementById("nav");
+        if (x.className === "navbar") {
+            x.className += " responsive";
+        } else {
+            x.className = "navbar";
+        }
+    }
+    function calculateWHR() {
+        const waistInput = document.getElementById('waist');
+        const hipInput = document.getElementById('hip');
+        const result = document.getElementById('result3');
+
+        const waist = parseFloat(waistInput.value);
+        const hip = parseFloat(hipInput.value);
+
+        if (isNaN(waist) || isNaN(hip) || waist <= 0 || hip <= 0) {
+            result.textContent = 'Please enter valid waist and hip measurements.';
+            return;
+        }
+
+        // Calculate WHR
+        const whr = waist / hip;
+
+        result.textContent = `Your Waist-Hip Ratio (WHR) is ${whr.toFixed(2)}.`;
+
+        if (whr >= 0.9) {
+            result.textContent += ' (High Risk)';
+        } else {
+            result.textContent += ' (Low Risk)';
+        }
+    }
+    function openTab(evt, Name) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        document.getElementById(Name).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+    function getAge(dateString) {
+        var today = new Date();
+        var birthDate = new Date(dateString);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        return age;
+    }
+    var val = document.getElementById("dob").innerText;
+    var ans = getAge(val);
+    document.getElementById("age").innerText = ans;
+
+    function calculateSleepSchedule() {
+        const ageInput = document.getElementById('age');
+        const wakeupInput = document.getElementById('wakeup');
+        const result = document.getElementById('result1');
+
+        const age = parseFloat(ageInput.value);
+        const wakeupTime = new Date(`2000-01-01 ${wakeupInput.value}`);
+
+        if (isNaN(age) || isNaN(wakeupTime)) {
+            result.textContent = 'Please enter a valid age and wake-up time.';
+            return;
+        }
+
+        let recommendedBedtime = new Date(wakeupTime);
+        const currentHour = recommendedBedtime.getHours();
+
+        if (age < 18) {
+            recommendedBedtime.setHours(currentHour - 9);
+            result.textContent = `Recommended bedtime for an age under 18: ${recommendedBedtime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
+        } else if (age >= 18 && age <= 64) {
+            recommendedBedtime.setHours(currentHour - 7);
+            result.textContent = `Recommended bedtime for an age between 18 and 64: ${recommendedBedtime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
+        } else {
+            recommendedBedtime.setHours(currentHour - 8);
+            result.textContent = `Recommended bedtime for an age 65 or older: ${recommendedBedtime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}.`;
+        }
+    }
+    function calculateBMI() {
+        const weightInput = document.getElementById('weight');
+        const heightInput = document.getElementById('height');
+        const result = document.getElementById('result2');
+
+        const weight = parseFloat(weightInput.value);
+        const h = parseFloat(heightInput.value);
+        const height = h * 2.54;
+        if (isNaN(weight) || isNaN(height) || weight <= 0 || height <= 0) {
+            result.textContent = 'Please enter valid weight and height.';
+            return;
+        }
+
+        // Calculate BMI
+        const bmi = weight / ((height / 100) * (height / 100));
+
+        result.textContent = `Your BMI is ${bmi.toFixed(2)}.`;
+
+        if (bmi < 18.5) {
+            result.textContent += ' (Underweight)';
+        } else if (bmi >= 18.5 && bmi < 24.9) {
+            result.textContent += ' (Normal Weight)';
+        } else if (bmi >= 25 && bmi < 29.9) {
+            result.textContent += ' (Overweight)';
+        } else {
+            result.textContent += ' (Obese)';
+        }
+    }
+    function calculateBMR() {
+        const genderInput = document.getElementById('gender');
+        const weightInput = document.getElementById('weight');
+        const heightInput = document.getElementById('height');
+        const ageInput = document.getElementById('age');
+        const result = document.getElementById('result4');
+
+        const gender = genderInput.value;
+        const weight = parseFloat(weightInput.value);
+        const h = parseFloat(heightInput.value);
+        height = h * 2.54
+        const age = parseInt(ageInput.value);
+
+        if (isNaN(weight) || isNaN(height) || isNaN(age) || weight <= 0 || height <= 0 || age <= 0) {
+            result.textContent = 'Please enter valid information.';
+            return;
+        }
+
+        let bmr;
+
+        if (gender === 'male') {
+            // BMR calculation for males
+            bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+        } else if (gender === 'female') {
+            // BMR calculation for females
+            bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+        }
+
+        result.textContent = `Your Basal Metabolic Rate (BMR) is approximately ${bmr.toFixed(2)} calories per day.`;
+    }
+</script>
+
+</html>

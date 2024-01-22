@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+  <title>WOW Bot</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <link rel="shortcut icon" href="{% static 'media/favicon.jpeg' %}" title="Favicon" />
+  <link href="{% static 'styles/styles.css' %}" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <style>
+    body {
+      animation: fadein ease 1s;
+      animation-iteration-count: 1;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes fadein {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .card {
+      width: 100%;
+      background-color: #fff;
+      font-family: var(--f2);
+
+    }
+
+
+    #message-section {
+      padding: 10px;
+      max-height: 300px;
+      overflow-y: scroll;
+    }
+
+    .message {
+      margin: 10px 0;
+      padding: 10px;
+    }
+
+    #user {
+      background-color: #fff;
+      text-align: right;
+    }
+
+    #bot {
+      background-color: #d88fe4;
+      border-radius: 10px;
+
+    }
+
+    #bot-response {
+      font-weight: bold;
+    }
+
+    #input-section {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px;
+      background-color: #fff;
+      border-top: 1px solid #ccc;
+    }
+
+    #input {
+      flex: 1;
+      padding: 5px;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+  <style>
+    body {
+      background-color: #ddd;
+    }
+
+    .navbar {
+      overflow-x: hidden;
+      background-color: #794482;
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      left: 0;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .navbar a {
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-family: 'Montserrat', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 17px;
+      font-weight: bold;
+    }
+
+    .navbar a:hover {
+      background-color: #BA68C8;
+      color: black;
+    }
+
+    .navbar a.active {
+      background-color: #BA68C8;
+      color: black;
+    }
+
+    .navbar .icon {
+      display: none;
+    }
+
+    @media screen and (max-width: 600px) {
+      .navbar a:not(:first-child) {
+        display: none;
+      }
+
+      .navbar a.icon {
+        float: right;
+        display: block;
+      }
+
+      .navbar {
+        display: block !important;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      .navbar.responsive .icon {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+      }
+
+      .navbar.responsive a {
+        float: none;
+        display: block;
+        text-align: left;
+      }
+
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+      font-family: var(--f1);
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    .purple {
+      color: #794482;
+    }
+
+    .card-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+      width: 85%;
+
+    }
+
+    .blue {
+      background-color: rgb(186, 104, 200, 0.6);
+    }
+
+    .unblue {
+      background-color: #acb6c4;
+    }
+
+    .cwhite {
+      color: #fff;
+
+    }
+
+    .content {
+      padding: 10px 30px 0px 30px;
+    }
+
+    .btns {
+      cursor: pointer;
+      color: #fff;
+      text-transform: uppercase;
+      border: 0;
+      padding: 10px 7px;
+      font-family: var(--f1);
+      margin-top: 10px;
+      margin-left: -5px;
+      border-radius: 5px;
+      background-color: #BB69C9;
+      -webkit-transition: background-color 300ms;
+      -moz-transition: background-color 300ms;
+      transition: background-color 300ms;
+    }
+
+    .btns:hover {
+      background-color: #7A667D;
+    }
+
+    .space-around {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .row {
+      display: flex;
+      justify-content: center;
+    }
+
+    .row .card.f5 {
+      width: 50%;
+    }
+
+    .row .card.f3 {
+      width: 30%;
+    }
+
+    .grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      gap: 15px;
+      align-items: center;
+      grid-template-columns: repeat(auto-fit, minmax(100px, 300px));
+    }
+
+    .goals {
+      background-color: #BA68C8;
+      padding: 5px;
+      text-align: center;
+      border-radius: 15px;
+      border: 1px solid #794482;
+      /* width: 30%; */
+      margin: 10px;
+
+    }
+
+    @media screen and (max-width: 768px) {
+      .row {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .card {
+        width: 85% !important;
+      }
+
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <body>
+    <div class="main">
+      <div class="navbar" id="nav">
+        <a href="/home/">Home</a>
+        <a href="/tools/">Fitness Tools</a>
+        <a href="/exercises/">Exercise Tracking</a>
+        <a href="/recommendations/" class="active">Recommendations</a>
+        <a href="/goals/">Fitness Goals</a>
+        <a href="/myaccount/">My Account</a>
+        <a href="/blogs/">Fitness Blog</a>
+        <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="navbar()">&#9776;</a>
+      </div>
+      <br>
+      <div class="content card-wrapper">
+        <div class="card">
+
+          <div id="message-section">
+            <div class="message" id="bot"><span id="bot-response">Type in the disease to receive dietery
+                suggestions!</span></div>
+          </div>
+          <div id="input-section">
+            <input id="input" type="text" placeholder="Type a message" autocomplete="off" autofocus="autofocus" />
+            <button id="submitPrompt" class="send btns" onclick="sendMessage()">
+              Send
+            </button>
+          </div>
+        </div>
+        <img src="{% static 'media/bimg2.png' %}" style="width: 30%;">
+      </div>
+      <br><br><br><br><br><br>
+    </div>
+    <script>
+      const synth = window.speechSynthesis;
+
+      function voiceControl(string) {
+        let u = new SpeechSynthesisUtterance(string);
+        u.text = string;
+        u.lang = "en-aus";
+        u.volume = 1;
+        u.rate = 1;
+        u.pitch = 1;
+        synth.speak(u);
+      }
+
+      function sendMessage() {
+        const inputField = document.getElementById("input");
+        let input = inputField.value.trim();
+        input != "" && output(input);
+        inputField.value = "";
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        const inputField = document.getElementById("input");
+        inputField.addEventListener("keydown", function (e) {
+          if (e.code === "Enter") {
+            let input = inputField.value.trim();
+            input != "" && output(input);
+            inputField.value = "";
+          }
+        });
+      });
+
+      function output(input) {
+        var prompt = input;
+
+        $.ajax({
+          url: '/get_ai_response/',
+          method: 'GET',
+          data: {
+            'prompt': `${prompt}. Be concise.`
+          },
+          success: function (response) {
+            var aiResponse = response.response.replace('AI: ', '');
+            addChat(input, aiResponse);
+          },
+          error: function (error) {
+            console.log(error);
+          }
+        });
+      }
+
+
+      function addChat(input, product) {
+        const mainDiv = document.getElementById("message-section");
+        let userDiv = document.createElement("div");
+        userDiv.id = "user";
+        userDiv.classList.add("message");
+        userDiv.innerHTML = `<span id="user-response">${input}</span>`;
+        mainDiv.appendChild(userDiv);
+
+        let botDiv = document.createElement("div");
+        botDiv.id = "bot";
+        botDiv.classList.add("message");
+        botDiv.innerHTML = `<span id="bot-response">${product}</span>`;
+        mainDiv.appendChild(botDiv);
+        var scroll = document.getElementById("message-section");
+        scroll.scrollTop = scroll.scrollHeight;
+        voiceControl(product);
+      }
+    </script>
+
+  </body>
+
+</html>

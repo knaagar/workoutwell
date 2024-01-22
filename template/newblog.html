@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'media/favicon.jpeg' %}" title="Favicon" />
+    <link href="{% static 'styles/styles.css' %}" rel="stylesheet">
+    <title>New Blog</title>
+    <style>
+        body {
+            animation: fadein ease 1s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadein {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/createblog/" method="post" class="login">
+        {% csrf_token %}
+        <input type="text" name="title" placeholder="Enter blog title"><br>
+        <input type="text" name="tag" placeholder="Enter blog tag/category"><br>
+        <input type="text" name="intro" placeholder="Intro..."><br>
+        <input type="text" name="content" placeholder="Content...">
+        <button type="submit">create</button>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'media/favicon.jpeg' %}" title="Favicon" />
+    <link href="{% static 'styles/styles.css' %}" rel="stylesheet">
+    <title>WorkOutWell - SignUp</title>
+    <style>
+        body {
+            animation: fadein ease 1s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadein {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <form action="/signup/" method="post" class="login">
+        {% csrf_token %}
+        <input type="text" name="username" placeholder="Enter your username"><br>
+        <input type="password" name="password" placeholder="Enter your password"><br>
+        <input type="password" name="confirmpassword" placeholder="Re-enter your password">
+        <button type="submit">signup</button>
+        <p>Already have an account? <a href="/signin/">LogIn</a></p>
+    </form>
+</body>
+
+</html>

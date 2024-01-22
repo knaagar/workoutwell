@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{% static 'media/favicon.jpeg' %}" title="Favicon" />
+    <link href="{% static 'styles/styles.css' %}" rel="stylesheet">
+    <title>New Goal</title>
+    <style>
+        body {
+            animation: fadein ease 1s;
+            animation-iteration-count: 1;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes fadein {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <br>
+    <form action="/creategoal/" method="post" class="login">
+        {% csrf_token %}
+        <input type="text" name="gname" placeholder="Enter goal name"><br>
+        <input type="text" name="gdesc" placeholder="Enter goal description"><br>
+        <input type="date" name="sdate"><br>
+        <input type="date" name="tdate"><br>
+        <input type="text" name="gtag" placeholder="Enter goal tag/category"><br>
+        <label for="gstatus">Goal Status:</label>
+        <select name="gstatus">
+            <option value="inprogress">In Progress</option>
+            <option value="achieved">Achieved</option>
+            <option value="abandoned">Abandoned</option>
+        </select>
+        <br>
+        <button type="submit">create</button>
+    </form>
+    <br>
+</body>
+
+</html>
